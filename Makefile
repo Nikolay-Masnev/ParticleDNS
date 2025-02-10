@@ -3,8 +3,7 @@
 CC=g++
 
 CFLAGS=-c -Ofast -ffast-math -std=c++17 -Wall \
-	-Wcast-qual -Wpointer-arith -Wcast-align  \
-	-fprefetch-loop-arrays
+	-Wcast-qual -Wpointer-arith -Wcast-align  
 
 LDFLAGS= 
 
