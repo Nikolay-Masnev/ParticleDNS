@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
     readParams(data, paramsPath);
     //numericalProcedure(concentration, velocityVariance, data, pdf_vel, 
     //w_autocorrelator, phi_autocorrelator, phi_tau_corr, phi_traj);
-    numericalProcedure2(data, concentration);
+    numericalProcedure(data, concentration);
 
 #ifdef CONCENTRATION
     saveHist(concentration, argv[2]);

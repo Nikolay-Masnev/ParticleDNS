@@ -14,13 +14,13 @@
 
 void normalizePDF(std::vector<double> &pdf);
 
-void numericalProcedure(std::vector<double> &concentration, 
-std::vector<double> &velocityVariance, const input_params params, 
-std::vector<double> &pdf_vel, std::vector<double> &w_autocorrelator,
-std::vector<double> &phi_autocorrelator, std::vector<double> &phi_tau_corr,
-std::vector<double> &phi_traj);
+// void numericalProcedure(std::vector<double> &concentration, 
+// std::vector<double> &velocityVariance, const input_params params, 
+// std::vector<double> &pdf_vel, std::vector<double> &w_autocorrelator,
+// std::vector<double> &phi_autocorrelator, std::vector<double> &phi_tau_corr,
+// std::vector<double> &phi_traj);
 
-void numericalProcedure2(const input_params params, std::vector<double> &concentration);
+void numericalProcedure(const input_params params, std::vector<double> &concentration);
 double Sigma(double r);
 double M(double r, double L);
 double D(double r, double L);
