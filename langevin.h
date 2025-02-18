@@ -5,22 +5,14 @@
 #include "input_params.h"
 
 #define CONCENTRATION
-//#define VELOCITY_STAT
 #define PDF_VELOCITY
-//#define DEBUG
-//#define AUTOCORRELATION
-//#define ANGLE_CORRELATION
-//#define PHI_TRAJECTORY
+#define AUTOCORRELATION
+#define DIFFUSION
+#define FLUID_CORRELATION
 
-void normalizePDF(std::vector<double> &pdf);
+void numericalProcedure(const input_params params, std::vector<double> &concentration, 
+std::vector<std::vector<double>> & w_autocorr, std::vector<double> & diffusion);
 
-// void numericalProcedure(std::vector<double> &concentration, 
-// std::vector<double> &velocityVariance, const input_params params, 
-// std::vector<double> &pdf_vel, std::vector<double> &w_autocorrelator,
-// std::vector<double> &phi_autocorrelator, std::vector<double> &phi_tau_corr,
-// std::vector<double> &phi_traj);
-
-void numericalProcedure(const input_params params, std::vector<double> &concentration);
 double Sigma(double r);
 double M(double r, double L);
 double D(double r, double L);
@@ -28,7 +20,8 @@ double D(double r, double L);
 void calcAutoCorr(std::vector<double> &W_BUFFER, std::vector<double> &autocorrelator);
 void calcCorr(std::vector<double> &BUFFER, std::vector<double> &correlator);
 void normCorr(std::vector<double> &W_BUFFER, std::vector<double> &autocorrelator, uint64_t counter);
-void normalizePDF(std::vector<double> &concentration);
+void normalizePDF(std::vector<double> &pdf);
+double Integrate(const std::vector<double> &func, double dt);
 
 template <typename T>
 void printVector(std::vector<T> &v);

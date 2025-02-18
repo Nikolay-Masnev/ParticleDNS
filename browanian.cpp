@@ -23,19 +23,12 @@ int main(int argc, char *argv[])
 
     std::vector<double> concentration(nBins, 0.0); 
     std::vector<double> velocityVariance(nBins, 0.0);
-    std::vector<double> angleVariance(nBins, 0.0);
     std::vector<double> pdf_vel(nBins, 0.0);
-
-    std::vector<double> w_autocorrelator(nBinsCorr, 0.0);
-    std::vector<double> phi_autocorrelator(nBinsCorr, 0.0);
-    std::vector<double> phi_tau_corr(nBinsCorr, 0.0);
-
-    std::vector<double> phi_traj(1e4, 0.0);
+    std::vector<double> diffusion(nBins, 0.0);
+    std::vector<std::vector<double>> w_autocorrelator(nBins, std::vector<double>(nBinsCorr, 0.0));
 
     readParams(data, paramsPath);
-    //numericalProcedure(concentration, velocityVariance, data, pdf_vel, 
-    //w_autocorrelator, phi_autocorrelator, phi_tau_corr, phi_traj);
-    numericalProcedure(data, concentration);
+    numericalProcedure(data, concentration, w_autocorrelator, diffusion);
 
 #ifdef CONCENTRATION
     saveHist(concentration, argv[2]);
@@ -49,18 +42,13 @@ int main(int argc, char *argv[])
     saveHist(pdf_vel, argv[4]);
 #endif // PDF_VELOCITY
 
+#ifdef DIFFUSION
+    saveHist(diffusion, argv[5]);
+#endif // DIFFUSION
+
 #ifdef AUTOCORRELATION
-    saveHist(w_autocorrelator, argv[5]);
-    saveHist(phi_autocorrelator, argv[6]);
+    saveHist(w_autocorrelator[3], argv[6]);
 #endif // AUTOCORRELATION
-
-#ifdef ANGLE_CORRELATION
-    saveHist(phi_tau_corr, argv[7]);
-#endif // ANGLE_CORRELATION
-
-#ifdef PHI_TRAJECTORY
-    saveHist(phi_traj, argv[8]);
-#endif // PHI_TRAJECTORY
 
     auto t2 = std::chrono::high_resolution_clock::now();
     auto ms_int = std::chrono::duration_cast<std::chrono::seconds>(t2 - t1);

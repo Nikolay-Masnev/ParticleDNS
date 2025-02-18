@@ -22,7 +22,7 @@ $(EXECUTABLE): $(OBJECTS)
 	$(CC) $(CFLAGS) $< -o $@
 
 clean: 
-	rm -f *.o
+	rm -f *.o *.exe
 
 distclean: clean 
 	rm *.data
