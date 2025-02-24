@@ -84,12 +84,17 @@ double Sigma(double r)
 
 double M(double r, double L)
 {
-    return 0.1 + pow(r/L, 2);
+    return 1e-6 * (1 + 1e4 * pow(r/L, 2) );
 }
 
 double D(double r, double L)
 {
     return 10 * (0.1 + pow(r/L, 2));
+}
+
+double tau_corr(double r, double L)
+{
+    return 1/std::sqrt(15 * M(r, L));
 }
 
 double Integrate(const std::vector<double> &func, double dt)
@@ -163,10 +168,8 @@ void numericalProcedure(const input_params params, std::vector<double> &concentr
     W5 = 0;
     W6 = 0;
 
-    double tau_corr = tau * 0.1;
-    double rho = exp(-dt/tau_corr);
-    double sqrt_one_rho = sqrt(1 - rho * rho);
-    
+    double rho = 0;
+    double sqrt_one_rho = 0;
     double dr = 0;
 
 #ifdef AUTOCORRELATION
@@ -176,13 +179,14 @@ void numericalProcedure(const input_params params, std::vector<double> &concentr
     std::vector<uint64_t> autocorr_counter(autocorr_size, 0);
     double dl = L / autocorr_size;
     uint64_t autocorr_ind = 0;
-
-    std::cout << dl << '\n';
 #endif // AUTOCORRELATION
 
     for(uint64_t i = 0; i < steps; ++i)
     {
 #ifdef FLUID_CORRELATION
+        rho = exp(-dt/tau_corr(r, L));
+        sqrt_one_rho = sqrt(1 - rho * rho);
+
         W1 = W1_old * rho + sqrt_one_rho * dis(gen);
         W2 = W2_old * rho + sqrt_one_rho * dis(gen);
         W3 = W3_old * rho + sqrt_one_rho * dis(gen);
