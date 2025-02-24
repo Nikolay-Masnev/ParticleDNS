@@ -211,19 +211,15 @@ void numericalProcedure(const input_params params, std::vector<double> &concentr
 
         k_r1 = dt * w_r;
 
-        k_wr_1 = - dt_tau_invert * w_r + sqrt_dt * sqrt12 * (W1 * sqrt(D(r,L)) + (W2 * w_r + W3 * w_phi) * sqrt(M(r, L)));
+        k_wr_1 = - dt_tau_invert * w_r + sqrt_dt * sqrt12 * W1 * sqrt(D(r,L));
 
-        k_wphi_1 = -dt_tau_invert * w_phi + sqrt_dt * sqrt12 * (W4 * sqrt(D(r,L)) + (W5 * w_r + W6 * w_phi) * sqrt(M(r,L))) - dt * w_r * Sigma(r);
+        k_wphi_1 = -dt_tau_invert * w_phi + sqrt_dt * sqrt12 * W4 * sqrt(D(r,L))- dt * w_r * Sigma(r);
 
         k_r2 = dt * (w_r + k_wr_1);
 
-        k_wr_2 = - dt_tau_invert * (w_r + k_wr_1) + sqrt_dt * sqrt12 * (W1 * sqrt(D(r+k_r1,L))
-         + (W2 * (w_r+k_wr_1) + W3 * (w_phi + k_wphi_1)) * sqrt(M(r + k_r1, L)));
+        k_wr_2 = - dt_tau_invert * (w_r + k_wr_1) + sqrt_dt * sqrt12 * W1 * sqrt(D(r+k_r1,L));
 
-        k_wphi_2 = -dt_tau_invert * (w_phi + k_wphi_1) 
-        + sqrt_dt * sqrt12 * (W4 * sqrt(D(r+k_r1,L)) 
-        + (W5 * (w_r + k_wr_1) + W6 * (w_phi + k_wphi_1)) * sqrt(M(r+k_r1,L))) 
-        - dt * (w_r + k_wr_1) * Sigma(r + k_r1);
+        k_wphi_2 = -dt_tau_invert * (w_phi + k_wphi_1) + sqrt_dt * sqrt12 * W4 * sqrt(D(r+k_r1,L))  - dt * (w_r + k_wr_1) * Sigma(r + k_r1);
 
         dr = 0.5 * (k_r1 + k_r2);
         w_r += 0.5 * (k_wr_1 + k_wr_2);
